@@ -39,7 +39,7 @@ class AllUserController extends Controller
         ];
         if(AllUser::create($data)){
             $request->profile_photo_path->move('images', $filename);
-            return redirect()->route('dasboard')->with('msg', 'User Added Successfully');
+            return redirect()->route('dashboard')->with('msg', 'User Added Successfully');
         }
     }
 
@@ -92,8 +92,32 @@ class AllUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AllUser $allUser)
+    public function softDelete(AllUser $allUser)
     {
-        //
+        $allUser->delete(); // Soft delete the user
+        return redirect()->route('dashboard')->with('msg', 'User successfully move recycle.');
+    }
+   
+    public function recycle()
+    {
+        $users = AllUser::onlyTrashed()->get();
+        return view('recycle', compact('users'));
+    }
+
+    public function restore($id)
+    {
+        $user = AllUser::withTrashed()->findOrFail($id);
+        if(!empty($user)){
+            $user->restore();
+        }
+        return redirect()->route('dashboard')->with('msg', 'User successfully restore.');
+    }
+    public function destroy($id)
+    {
+        $user = AllUser::withTrashed()->findOrFail($id);
+        if(!empty($user)){
+            $user->forceDelete();
+        }
+        return redirect()->route('dashboard')->with('msg', 'User successfully delete.');
     }
 }

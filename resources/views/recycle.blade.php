@@ -3,7 +3,6 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
-        <a href="{{route('recycle')}}" class="btn btn-warning text-end">Trust</a>
     </x-slot>
 
     <div class="py-12">
@@ -18,8 +17,7 @@
               
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="d-flex justify-content-between align-items-center p-4">
-                    <h1><b>All User</b></h1>
-                    <a href="{{route('add_user')}}" class="btn btn-primary">Add new user</a>
+                    <h1><b>Recycle</b></h1>
                 </div>
                 <table data-toggle="table" class="table text-center">
                     <thead>
@@ -37,9 +35,8 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
                             <td>
-                                <a href="{{route('show_user', $user->id)}}">Show</a> | 
-                                <a href="{{route('edit_user', $user->id)}}">Edit</a> |
-                                <a href="{{route('user_softDelete', $user->id)}}">Recycle</a>
+                                <a href="{{route('user_restore', $user->id)}}">Restore</a> |
+                                <a href="{{route('user_delete', $user->id)}}">Delete</a>
                             </td>
                         </tr>
                         @endforeach
