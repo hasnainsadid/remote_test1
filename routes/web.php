@@ -31,6 +31,8 @@ Route::middleware([
     Route::post('/submit_user', [AllUserController::class, 'store'])->name('submit_user');
     
     Route::get('/show_user/{id}', [AllUserController::class, 'show'])->name('show_user');
+    Route::get('/edit_user/{id}', [AllUserController::class, 'edit'])->name('edit_user');
+    Route::post('/update_user/{id}', [AllUserController::class, 'update'])->name('update_user');
 });
 
 

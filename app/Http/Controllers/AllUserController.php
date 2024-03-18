@@ -39,7 +39,7 @@ class AllUserController extends Controller
         ];
         if(AllUser::create($data)){
             $request->profile_photo_path->move('images', $filename);
-            return redirect()->back()->with('msg', 'User Added Successfully');
+            return redirect()->route('dasboard')->with('msg', 'User Added Successfully');
         }
     }
 
@@ -56,18 +56,38 @@ class AllUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AllUser $allUser)
+    public function edit(AllUser $allUser,$id)
     {
-        //
+        $user = AllUser::find($id);
+        // dd($user);
+        return view('editUser', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AllUser $allUser)
+    public function update(Request $request,$id)
     {
-        //
+        $request->validate([
+            'profile_photo_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        $user = AllUser::findOrFail($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        if ($request->hasFile('profile_photo_path')) {
+            $imagePath = $request->file('profile_photo_path')->store('images', 'public');
+            $user->profile_photo_path = $imagePath;
+        }
+
+        $user->save();
+        return redirect()->route('dashboard')->with('msg', 'User updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.

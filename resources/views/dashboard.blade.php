@@ -7,6 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="container">
+                @if (session('msg'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{session('msg')}}
+              </div>
+              @endif
+              </div>
+              
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="d-flex justify-content-between align-items-center p-4">
                     <h1><b>All User</b></h1>
@@ -27,7 +35,11 @@
                             <td>{{++$key}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
-                            <td><a href="{{route('show_user', $user->id)}}">Show</a> | Edit | Delete</td>
+                            <td>
+                                <a href="{{route('show_user', $user->id)}}">Show</a> | 
+                                <a href="{{route('edit_user', $user->id)}}">Edit</a> |
+                                <a href="{{route('show_user', $user->id)}}">Recycle</a>
+                            </td>
                         </tr>
                         @endforeach
                       
