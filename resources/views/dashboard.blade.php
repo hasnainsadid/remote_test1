@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
-        <a href="{{route('recycle')}}" class="btn btn-warning text-end">Trust</a>
+        <a href="{{route('recycle')}}" class="btn btn-warning text-end">Trush</a>
     </x-slot>
 
     <div class="py-12">
